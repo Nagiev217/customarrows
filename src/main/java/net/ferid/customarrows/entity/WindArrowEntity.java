@@ -70,6 +70,6 @@ public class WindArrowEntity extends ArrowEntity {
         );
 
         world.spawnParticles(ParticleTypes.GUST_EMITTER_LARGE, pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0);
-        world.playSound(null, pos.x, pos.y, pos.z, SoundEvents.ENTITY_WIND_CHARGE_BURST, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+        world.playSound(null, pos.x, pos.y, pos.z, SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST, SoundCategory.NEUTRAL, 1.0F, 1.0F);
     }
 }

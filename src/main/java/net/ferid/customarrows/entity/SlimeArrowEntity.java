@@ -51,7 +51,7 @@ public class SlimeArrowEntity extends ArrowEntity {
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         // Client side just mirrors what the server decides; the server owns bounce state.
-        if (this.getEntityWorld().isClient || this.bounceCount >= MAX_BOUNCES) {
+        if (this.getEntityWorld().isClient() || this.bounceCount >= MAX_BOUNCES) {
             super.onBlockHit(blockHitResult);
             return;
         }
