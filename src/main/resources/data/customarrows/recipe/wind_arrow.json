@@ -7,15 +7,9 @@
     "W"
   ],
   "key": {
-    "F": {
-      "item": "minecraft:feather"
-    },
-    "R": {
-      "item": "minecraft:breeze_rod"
-    },
-    "W": {
-      "item": "minecraft:wind_charge"
-    }
+    "F": "minecraft:feather",
+    "R": "minecraft:breeze_rod",
+    "W": "minecraft:wind_charge"
   },
   "result": {
     "id": "customarrows:wind_arrow",

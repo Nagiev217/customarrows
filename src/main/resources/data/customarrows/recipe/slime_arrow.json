@@ -7,15 +7,9 @@
     "B"
   ],
   "key": {
-    "F": {
-      "item": "minecraft:feather"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "B": {
-      "item": "minecraft:slime_ball"
-    }
+    "F": "minecraft:feather",
+    "S": "minecraft:stick",
+    "B": "minecraft:slime_ball"
   },
   "result": {
     "id": "customarrows:slime_arrow",
