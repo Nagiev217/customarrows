@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "F",
+    "R",
+    "W"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "R": {
+      "item": "minecraft:breeze_rod"
+    },
+    "W": {
+      "item": "minecraft:wind_charge"
+    }
+  },
+  "result": {
+    "id": "customarrows:wind_arrow",
+    "count": 4
+  }
+}

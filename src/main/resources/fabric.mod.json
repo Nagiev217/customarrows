@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "customarrows",
+	"version": "${version}",
+	"name": "Custom Arrows",
+	"description": "Adds the Slime Arrow (bounces off surfaces) and the Wind Arrow (detonates a Wind Charge burst on impact).",
+	"authors": [
+		"Ferid"
+	],
+	"contact": {},
+	"license": "MIT",
+	"icon": "assets/customarrows/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.ferid.customarrows.CustomArrowsMod"
+		],
+		"client": [
+			"net.ferid.customarrows.client.CustomArrowsModClient"
+		]
+	},
+	"mixins": [],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
