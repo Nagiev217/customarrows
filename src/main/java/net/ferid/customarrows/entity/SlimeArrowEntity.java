@@ -35,12 +35,12 @@ public class SlimeArrowEntity extends ArrowEntity {
         super(entityType, world);
     }
 
-    public SlimeArrowEntity(World world, double x, double y, double z, ItemStack stack, ItemStack shotFrom) {
-        super(ModEntities.SLIME_ARROW, x, y, z, world, stack, shotFrom);
-    }
-
     public SlimeArrowEntity(World world, LivingEntity owner, ItemStack stack, ItemStack shotFrom) {
-        super(ModEntities.SLIME_ARROW, owner, world, stack, shotFrom);
+        this(ModEntities.SLIME_ARROW, world);
+        this.setOwner(owner);
+        this.setStack(stack);
+        // The bow/crossbow firing code repositions and launches the arrow via setVelocity(...)
+        // right after createArrow() returns, so no manual position/rotation setup is needed here.
     }
 
     @Override
@@ -51,7 +51,7 @@ public class SlimeArrowEntity extends ArrowEntity {
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         // Client side just mirrors what the server decides; the server owns bounce state.
-        if (this.getWorld().isClient || this.bounceCount >= MAX_BOUNCES) {
+        if (this.getEntityWorld().isClient || this.bounceCount >= MAX_BOUNCES) {
             super.onBlockHit(blockHitResult);
             return;
         }

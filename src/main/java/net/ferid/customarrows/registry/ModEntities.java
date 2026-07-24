@@ -3,7 +3,6 @@ package net.ferid.customarrows.registry;
 import net.ferid.customarrows.CustomArrowsMod;
 import net.ferid.customarrows.entity.SlimeArrowEntity;
 import net.ferid.customarrows.entity.WindArrowEntity;
-import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
@@ -21,7 +20,7 @@ public final class ModEntities {
     public static final EntityType<SlimeArrowEntity> SLIME_ARROW = register(
             "slime_arrow",
             EntityType.Builder.<SlimeArrowEntity>create(SlimeArrowEntity::new, SpawnGroup.MISC)
-                    .dimensions(EntityDimensions.fixed(0.5F, 0.5F))
+                    .dimensions(0.5F, 0.5F)
                     .maxTrackingRange(4)
                     .trackingTickInterval(20)
     );
@@ -29,7 +28,7 @@ public final class ModEntities {
     public static final EntityType<WindArrowEntity> WIND_ARROW = register(
             "wind_arrow",
             EntityType.Builder.<WindArrowEntity>create(WindArrowEntity::new, SpawnGroup.MISC)
-                    .dimensions(EntityDimensions.fixed(0.5F, 0.5F))
+                    .dimensions(0.5F, 0.5F)
                     .maxTrackingRange(4)
                     .trackingTickInterval(20)
     );
