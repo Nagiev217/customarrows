@@ -30,6 +30,7 @@ public final class ModItems {
             new ArrowItem(settings) {
                 @Override
                 public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, ItemStack shotFrom) {
+                    CustomArrowsMod.LOGGER.info("[DIAG] SLIME_ARROW.createArrow() called, client={}", world.isClient());
                     return new SlimeArrowEntity(world, shooter, stack, shotFrom);
                 }
 
@@ -37,6 +38,7 @@ public final class ModItems {
                 // ProjectileItem method, not createArrow(...) above - see SlimeArrowEntity#create.
                 @Override
                 public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
+                    CustomArrowsMod.LOGGER.info("[DIAG] SLIME_ARROW.createEntity() called, client={}", world.isClient());
                     return SlimeArrowEntity.create(world, pos, stack);
                 }
             });
@@ -45,11 +47,13 @@ public final class ModItems {
             new ArrowItem(settings) {
                 @Override
                 public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, ItemStack shotFrom) {
+                    CustomArrowsMod.LOGGER.info("[DIAG] WIND_ARROW.createArrow() called, client={}", world.isClient());
                     return new WindArrowEntity(world, shooter, stack, shotFrom);
                 }
 
                 @Override
                 public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
+                    CustomArrowsMod.LOGGER.info("[DIAG] WIND_ARROW.createEntity() called, client={}", world.isClient());
                     return WindArrowEntity.create(world, pos, stack);
                 }
             });

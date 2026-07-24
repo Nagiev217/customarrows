@@ -1,5 +1,6 @@
 package net.ferid.customarrows.entity;
 
+import net.ferid.customarrows.CustomArrowsMod;
 import net.ferid.customarrows.registry.ModEntities;
 import net.ferid.customarrows.registry.ModItems;
 import net.minecraft.entity.EntityType;
@@ -26,6 +27,18 @@ public class WindArrowEntity extends ArrowEntity {
 
     /** Matches the explosion power of vanilla Wind Charges. */
     private static final float EXPLOSION_POWER = 1.2F;
+
+    private boolean loggedFirstTick = false;
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.loggedFirstTick) {
+            this.loggedFirstTick = true;
+            CustomArrowsMod.LOGGER.info("[DIAG] WindArrowEntity ticking, client={}, pos={}, vel={}, discarded={}",
+                    this.getEntityWorld().isClient(), this.getPos(), this.getVelocity(), this.isRemoved());
+        }
+    }
 
     public WindArrowEntity(EntityType<? extends WindArrowEntity> entityType, World world) {
         super(entityType, world);

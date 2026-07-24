@@ -1,5 +1,6 @@
 package net.ferid.customarrows.entity;
 
+import net.ferid.customarrows.CustomArrowsMod;
 import net.ferid.customarrows.registry.ModEntities;
 import net.ferid.customarrows.registry.ModItems;
 import net.minecraft.entity.EntityType;
@@ -31,6 +32,18 @@ public class SlimeArrowEntity extends ArrowEntity {
 
     /** How many times this arrow has already bounced; persisted so it survives chunk reloads. */
     private int bounceCount = 0;
+
+    private boolean loggedFirstTick = false;
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.loggedFirstTick) {
+            this.loggedFirstTick = true;
+            CustomArrowsMod.LOGGER.info("[DIAG] SlimeArrowEntity ticking, client={}, pos={}, vel={}, discarded={}",
+                    this.getEntityWorld().isClient(), this.getPos(), this.getVelocity(), this.isRemoved());
+        }
+    }
 
     public SlimeArrowEntity(EntityType<? extends SlimeArrowEntity> entityType, World world) {
         super(entityType, world);
