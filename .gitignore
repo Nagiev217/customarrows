@@ -14,3 +14,6 @@ bin/
 
 # Fabric Loom
 run/
+
+# Claude Code session state
+.claude/
