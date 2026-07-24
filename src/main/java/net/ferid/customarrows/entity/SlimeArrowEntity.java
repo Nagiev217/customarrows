@@ -11,6 +11,7 @@ import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -41,6 +42,18 @@ public class SlimeArrowEntity extends ArrowEntity {
         this.setStack(stack);
         // The bow/crossbow firing code repositions and launches the arrow via setVelocity(...)
         // right after createArrow() returns, so no manual position/rotation setup is needed here.
+    }
+
+    /**
+     * Builds a bare arrow at a position with no owner set. Bows/crossbows/dispensers all
+     * spawn projectiles through {@link net.minecraft.item.ProjectileItem#createEntity}, which
+     * only gives a position (no shooter) - see {@link net.ferid.customarrows.registry.ModItems}.
+     */
+    public static SlimeArrowEntity create(World world, Position pos, ItemStack stack) {
+        SlimeArrowEntity arrow = new SlimeArrowEntity(ModEntities.SLIME_ARROW, world);
+        arrow.setPosition(pos.getX(), pos.getY(), pos.getZ());
+        arrow.setStack(stack);
+        return arrow;
     }
 
     @Override

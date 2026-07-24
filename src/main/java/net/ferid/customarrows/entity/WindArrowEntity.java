@@ -11,6 +11,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -36,6 +37,18 @@ public class WindArrowEntity extends ArrowEntity {
         this.setStack(stack);
         // The bow/crossbow firing code repositions and launches the arrow via setVelocity(...)
         // right after createArrow() returns, so no manual position/rotation setup is needed here.
+    }
+
+    /**
+     * Builds a bare arrow at a position with no owner set. Bows/crossbows/dispensers all
+     * spawn projectiles through {@link net.minecraft.item.ProjectileItem#createEntity}, which
+     * only gives a position (no shooter) - see {@link net.ferid.customarrows.registry.ModItems}.
+     */
+    public static WindArrowEntity create(World world, Position pos, ItemStack stack) {
+        WindArrowEntity arrow = new WindArrowEntity(ModEntities.WIND_ARROW, world);
+        arrow.setPosition(pos.getX(), pos.getY(), pos.getZ());
+        arrow.setStack(stack);
+        return arrow;
     }
 
     @Override

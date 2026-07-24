@@ -6,6 +6,7 @@ import net.ferid.customarrows.entity.SlimeArrowEntity;
 import net.ferid.customarrows.entity.WindArrowEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -15,6 +16,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
 /** Registers the two custom arrow items and hooks them into the vanilla Combat creative tab. */
@@ -29,6 +32,13 @@ public final class ModItems {
                 public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, ItemStack shotFrom) {
                     return new SlimeArrowEntity(world, shooter, stack, shotFrom);
                 }
+
+                // Bows/crossbows/dispensers actually spawn projectiles through this
+                // ProjectileItem method, not createArrow(...) above - see SlimeArrowEntity#create.
+                @Override
+                public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
+                    return SlimeArrowEntity.create(world, pos, stack);
+                }
             });
 
     public static final Item WIND_ARROW = register("wind_arrow", settings ->
@@ -36,6 +46,11 @@ public final class ModItems {
                 @Override
                 public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, ItemStack shotFrom) {
                     return new WindArrowEntity(world, shooter, stack, shotFrom);
+                }
+
+                @Override
+                public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
+                    return WindArrowEntity.create(world, pos, stack);
                 }
             });
 
