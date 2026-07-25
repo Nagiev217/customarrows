@@ -36,7 +36,7 @@ public class WindArrowEntity extends ArrowEntity {
         if (!this.loggedFirstTick) {
             this.loggedFirstTick = true;
             CustomArrowsMod.LOGGER.info("[DIAG] WindArrowEntity ticking, client={}, pos={}, vel={}, discarded={}",
-                    this.getEntityWorld().isClient(), this.getPos(), this.getVelocity(), this.isRemoved());
+                    this.getEntityWorld().isClient(), this.getEntityPos(), this.getVelocity(), this.isRemoved());
         }
     }
 
