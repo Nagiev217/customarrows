@@ -3,6 +3,7 @@ package net.ferid.customarrows.entity;
 import net.ferid.customarrows.registry.ModEntities;
 import net.ferid.customarrows.registry.ModItems;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.FlyingItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
  * falls back to vanilla behaviour and sticks in the next block it hits. Hitting a living
  * entity always deals normal arrow damage and consumes the arrow immediately.
  */
-public class SlimeArrowEntity extends ArrowEntity {
+public class SlimeArrowEntity extends ArrowEntity implements FlyingItemEntity {
 
     private static final int MAX_BOUNCES = 5;
     private static final double MIN_SPEED_LOSS = 0.15;
@@ -47,6 +48,12 @@ public class SlimeArrowEntity extends ArrowEntity {
     @Override
     protected ItemStack getDefaultItemStack() {
         return new ItemStack(ModItems.SLIME_ARROW);
+    }
+
+    /** Lets {@code FlyingItemEntityRenderer} draw this arrow as its item icon in flight. */
+    @Override
+    public ItemStack getStack() {
+        return this.getItemStack();
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.ferid.customarrows.entity;
 import net.ferid.customarrows.registry.ModEntities;
 import net.ferid.customarrows.registry.ModItems;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.FlyingItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
  * vanilla Wind Charges/the Breeze), and plays the vanilla wind burst particles/sound.
  * The arrow is consumed immediately after the burst.
  */
-public class WindArrowEntity extends ArrowEntity {
+public class WindArrowEntity extends ArrowEntity implements FlyingItemEntity {
 
     /** Matches the explosion power of vanilla Wind Charges. */
     private static final float EXPLOSION_POWER = 1.2F;
@@ -42,6 +43,12 @@ public class WindArrowEntity extends ArrowEntity {
     @Override
     protected ItemStack getDefaultItemStack() {
         return new ItemStack(ModItems.WIND_ARROW);
+    }
+
+    /** Lets {@code FlyingItemEntityRenderer} draw this arrow as its item icon in flight. */
+    @Override
+    public ItemStack getStack() {
+        return this.getItemStack();
     }
 
     @Override
