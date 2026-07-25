@@ -1,6 +1,5 @@
 package net.ferid.customarrows.entity;
 
-import net.ferid.customarrows.CustomArrowsMod;
 import net.ferid.customarrows.registry.ModEntities;
 import net.ferid.customarrows.registry.ModItems;
 import net.minecraft.entity.EntityType;
@@ -12,7 +11,6 @@ import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -33,18 +31,6 @@ public class SlimeArrowEntity extends ArrowEntity {
     /** How many times this arrow has already bounced; persisted so it survives chunk reloads. */
     private int bounceCount = 0;
 
-    private boolean loggedFirstTick = false;
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (!this.loggedFirstTick) {
-            this.loggedFirstTick = true;
-            CustomArrowsMod.LOGGER.info("[DIAG] SlimeArrowEntity ticking, client={}, pos={}, vel={}, discarded={}",
-                    this.getEntityWorld().isClient(), this.getEntityPos(), this.getVelocity(), this.isRemoved());
-        }
-    }
-
     public SlimeArrowEntity(EntityType<? extends SlimeArrowEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -53,20 +39,9 @@ public class SlimeArrowEntity extends ArrowEntity {
         this(ModEntities.SLIME_ARROW, world);
         this.setOwner(owner);
         this.setStack(stack);
-        // The bow/crossbow firing code repositions and launches the arrow via setVelocity(...)
-        // right after createArrow() returns, so no manual position/rotation setup is needed here.
-    }
-
-    /**
-     * Builds a bare arrow at a position with no owner set. Bows/crossbows/dispensers all
-     * spawn projectiles through {@link net.minecraft.item.ProjectileItem#createEntity}, which
-     * only gives a position (no shooter) - see {@link net.ferid.customarrows.registry.ModItems}.
-     */
-    public static SlimeArrowEntity create(World world, Position pos, ItemStack stack) {
-        SlimeArrowEntity arrow = new SlimeArrowEntity(ModEntities.SLIME_ARROW, world);
-        arrow.setPosition(pos.getX(), pos.getY(), pos.getZ());
-        arrow.setStack(stack);
-        return arrow;
+        // createArrow() only builds the entity - the bow fires it from wherever it already is,
+        // so it has to be positioned at the shooter's eyes itself (vanilla does the same).
+        this.setPosition(owner.getX(), owner.getEyeY() - 0.1, owner.getZ());
     }
 
     @Override

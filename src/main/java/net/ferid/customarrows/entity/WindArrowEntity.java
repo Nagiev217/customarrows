@@ -1,6 +1,5 @@
 package net.ferid.customarrows.entity;
 
-import net.ferid.customarrows.CustomArrowsMod;
 import net.ferid.customarrows.registry.ModEntities;
 import net.ferid.customarrows.registry.ModItems;
 import net.minecraft.entity.EntityType;
@@ -12,7 +11,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -28,18 +26,6 @@ public class WindArrowEntity extends ArrowEntity {
     /** Matches the explosion power of vanilla Wind Charges. */
     private static final float EXPLOSION_POWER = 1.2F;
 
-    private boolean loggedFirstTick = false;
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (!this.loggedFirstTick) {
-            this.loggedFirstTick = true;
-            CustomArrowsMod.LOGGER.info("[DIAG] WindArrowEntity ticking, client={}, pos={}, vel={}, discarded={}",
-                    this.getEntityWorld().isClient(), this.getEntityPos(), this.getVelocity(), this.isRemoved());
-        }
-    }
-
     public WindArrowEntity(EntityType<? extends WindArrowEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -48,20 +34,9 @@ public class WindArrowEntity extends ArrowEntity {
         this(ModEntities.WIND_ARROW, world);
         this.setOwner(owner);
         this.setStack(stack);
-        // The bow/crossbow firing code repositions and launches the arrow via setVelocity(...)
-        // right after createArrow() returns, so no manual position/rotation setup is needed here.
-    }
-
-    /**
-     * Builds a bare arrow at a position with no owner set. Bows/crossbows/dispensers all
-     * spawn projectiles through {@link net.minecraft.item.ProjectileItem#createEntity}, which
-     * only gives a position (no shooter) - see {@link net.ferid.customarrows.registry.ModItems}.
-     */
-    public static WindArrowEntity create(World world, Position pos, ItemStack stack) {
-        WindArrowEntity arrow = new WindArrowEntity(ModEntities.WIND_ARROW, world);
-        arrow.setPosition(pos.getX(), pos.getY(), pos.getZ());
-        arrow.setStack(stack);
-        return arrow;
+        // createArrow() only builds the entity - the bow fires it from wherever it already is,
+        // so it has to be positioned at the shooter's eyes itself (vanilla does the same).
+        this.setPosition(owner.getX(), owner.getEyeY() - 0.1, owner.getZ());
     }
 
     @Override
